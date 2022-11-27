@@ -37,7 +37,14 @@ paths:
                 $ref: "#/components/schemas/Player"
         "401":
           description: Unauthorized
+      security:
+        - jwtAuth: []
 components:
+  securitySchemes:
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   schemas:
     Player:
       type: object

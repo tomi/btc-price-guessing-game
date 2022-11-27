@@ -1,4 +1,5 @@
-import { PutCommand } from "@aws-sdk/lib-dynamodb";
+import { GetCommand, PutCommand } from "@aws-sdk/lib-dynamodb";
+import { Uuid } from "../domain/common";
 import { Player } from "../domain/player";
 import { generateUuid } from "../domain/uuid";
 import { DdbClient } from "./ddbClient";
@@ -29,8 +30,22 @@ export const createPlayersRepo = ({ ddbClient }: PlayersRepoConfig) => {
     return newPlayer;
   };
 
+  const getPlayerById = async (id: Uuid): Promise<Player | undefined> => {
+    const cmd = new GetCommand({
+      TableName: TABLE_NAME,
+      Key: {
+        id,
+      },
+    });
+
+    const user = await ddbClient.send(cmd);
+
+    return user.Item as Player;
+  };
+
   return {
     persistPlayer,
+    getPlayerById,
   };
 };
 

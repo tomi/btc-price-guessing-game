@@ -30,7 +30,27 @@ export const createJwtService = ({ secret }: JwtServiceConfig) => {
     return token;
   };
 
+  const verifyJwt = async (token: string) => {
+    const verifiedToken = await new Promise<JwtPayload>((resolve, reject) => {
+      jwt.verify(
+        token,
+        secret,
+        {
+          // This should probably come from a config
+          issuer: ISSUER,
+        },
+        (err, verified) => {
+          if (err) reject(err);
+          else resolve(verified as JwtPayload);
+        },
+      );
+    });
+
+    return verifiedToken;
+  };
+
   return {
     createJwt,
+    verifyJwt,
   };
 };

@@ -4,7 +4,7 @@ import { JwtService } from "../domain/jwtService";
 import { PlayersRepo } from "../persistence/playersRepo";
 
 import * as endpoints from "./endpoints";
-import { defaultErrorHandlers } from "./endpoints/common";
+import { createJwtAuthHandler, defaultErrorHandlers } from "./endpoints/common";
 
 export interface PlayersApiConfig {
   jwtService: JwtService;
@@ -20,7 +20,10 @@ export const createPlayersApi = (config: PlayersApiConfig) => {
   playersApi.register({
     ...defaultErrorHandlers,
     registerPlayer: endpoints.createRegisterPlayerEndpoint(config),
+    getMe: endpoints.createGetMeEndpoint(config),
   });
+
+  playersApi.registerSecurityHandler("jwtAuth", createJwtAuthHandler(config.jwtService));
 
   // init api
   playersApi.init();

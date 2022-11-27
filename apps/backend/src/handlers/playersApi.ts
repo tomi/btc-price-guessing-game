@@ -4,7 +4,7 @@ import * as Lambda from "aws-lambda";
 import { createPlayersApi } from "../apis/playersApi";
 import { createDdbClient } from "../persistence/ddbClient";
 import { createPlayersRepo } from "../persistence/playersRepo";
-import { createJwtService } from "../domain/jwt";
+import { createJwtService } from "../domain/jwtService";
 
 const playersApi = createPlayersApi({
   playersRepo: createPlayersRepo({
