@@ -1,6 +1,6 @@
-import { PlayersRepo } from "../../persistence/playersRepo";
-import { OpenApiApiGatewayProxyEventHandler } from "../apiTypes";
-import * as common from "./common";
+import { PlayersRepo } from "../../../persistence/playersRepo";
+import { OpenApiApiGatewayProxyEventHandler } from "../../apiTypes";
+import * as common from "../../common";
 
 export interface GetMeEndpointConfig {
   playersRepo: PlayersRepo;

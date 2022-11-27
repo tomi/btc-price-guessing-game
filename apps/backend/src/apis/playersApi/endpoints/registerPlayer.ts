@@ -1,7 +1,7 @@
-import { JwtService } from "../../domain/jwtService";
-import { PlayersRepo } from "../../persistence/playersRepo";
-import { OpenApiApiGatewayProxyEventHandler } from "../apiTypes";
-import * as common from "./common";
+import { JwtService } from "../../../domain/jwtService";
+import { PlayersRepo } from "../../../persistence/playersRepo";
+import { OpenApiApiGatewayProxyEventHandler } from "../../apiTypes";
+import * as common from "../../common";
 
 export interface RegisterPlayerEndpointConfig {
   jwtService: JwtService;

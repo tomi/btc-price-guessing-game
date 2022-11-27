@@ -1,5 +1,5 @@
 import { Handler } from "openapi-backend";
-import { JwtService } from "../../domain/jwtService";
+import { JwtService } from "../domain/jwtService";
 
 export const defaultHeaders = {
   "content-type": "application/json",

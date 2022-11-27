@@ -1,10 +1,10 @@
 import OpenAPIBackend from "openapi-backend";
 import path from "path";
-import { JwtService } from "../domain/jwtService";
-import { PlayersRepo } from "../persistence/playersRepo";
+import { JwtService } from "../../domain/jwtService";
+import { PlayersRepo } from "../../persistence/playersRepo";
 
 import * as endpoints from "./endpoints";
-import { createJwtAuthHandler, defaultErrorHandlers } from "./endpoints/common";
+import * as common from "../common";
 
 export interface PlayersApiConfig {
   jwtService: JwtService;
@@ -18,12 +18,12 @@ export const createPlayersApi = (config: PlayersApiConfig) => {
   });
 
   playersApi.register({
-    ...defaultErrorHandlers,
+    ...common.defaultErrorHandlers,
     registerPlayer: endpoints.createRegisterPlayerEndpoint(config),
     getMe: endpoints.createGetMeEndpoint(config),
   });
 
-  playersApi.registerSecurityHandler("jwtAuth", createJwtAuthHandler(config.jwtService));
+  playersApi.registerSecurityHandler("jwtAuth", common.createJwtAuthHandler(config.jwtService));
 
   // init api
   playersApi.init();
