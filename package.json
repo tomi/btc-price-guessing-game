@@ -1,0 +1,22 @@
+{
+  "name": "btc-price-guessing-game",
+  "description": "Guess the BTC price game",
+  "version": "0.0.0",
+  "private": true,
+  "main": "index.js",
+  "author": "Tomi Turtiainen",
+  "license": "MIT",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "build": "turbo build",
+    "clean": "turbo clean",
+    "dev": "turbo dev",
+    "test": "turbo test"
+  },
+  "devDependencies": {
+    "turbo": "1.6.3"
+  }
+}

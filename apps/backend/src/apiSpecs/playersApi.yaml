@@ -1,0 +1,74 @@
+openapi: 3.0.0
+info:
+  version: "1.0.0"
+  title: Players API
+  description: API endpoints for registering and handling players
+paths:
+  /v1/players/register:
+    post:
+      summary: registers a new player
+      operationId: registerPlayer
+      description: Registers a new player to the game
+      responses:
+        "201":
+          description: player registered
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RegisterPlayerResponse"
+        "400":
+          description: "invalid input, object invalid"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterPlayerRequest"
+        description: Player to register
+  /v1/players/me:
+    get:
+      summary: Get the current player
+      operationId: getMe
+      responses:
+        "200":
+          description: Player details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Player"
+        "401":
+          description: Unauthorized
+components:
+  schemas:
+    Player:
+      type: object
+      required:
+        - id
+        - name
+        - score
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+        name:
+          type: string
+          example: Player One
+        score:
+          type: number
+          example: 5
+    RegisterPlayerRequest:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          example: Player One
+    RegisterPlayerResponse:
+      type: object
+      required:
+        - accessToken
+      properties:
+        accessToken:
+          type: string
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"

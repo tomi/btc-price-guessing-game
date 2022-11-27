@@ -1,0 +1,39 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Bitcoin price guessing game backend
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 5
+
+Resources:
+  PlayersApiFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: dist/playersApi
+      Handler: handlers/playersApi.handler
+      Runtime: nodejs18.x
+      Architectures:
+        - x86_64
+      Events:
+        PlayersApi:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /v1/players/{proxy+}
+            Method: ANY
+
+Outputs:
+  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+  # Find out more about other implicit resources you can reference within SAM
+  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  PlayersApi:
+    Description: "API Gateway endpoint URL for Prod stage for Players API function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/v1/players/"
+  PlayersApiFunction:
+    Description: "Players API Lambda Function ARN"
+    Value: !GetAtt PlayersApiFunction.Arn
+  PlayersApiFunctionIamRole:
+    Description: "Implicit IAM Role created for Players API function"
+    Value: !GetAtt PlayersApiFunctionRole.Arn
