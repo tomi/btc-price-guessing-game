@@ -76,6 +76,38 @@ Resources:
         Type: String
       TableName: prices
 
+  # Guesses
+  GuessesApiFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      Timeout: 15
+      CodeUri: dist/guessesApi
+      Handler: handlers/guessesApi.handler
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref GuessesTable
+        - DynamoDBCrudPolicy:
+            TableName: !Ref PricesTable
+      Events:
+        GuessesApiRoot:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: "/v1/guesses"
+            Method: ANY
+        GuessesApi:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /v1/guesses/{proxy+}
+            Method: ANY
+
+  GuessesTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      PrimaryKey:
+        Name: playerId
+        Type: String
+      TableName: guesses
+
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM

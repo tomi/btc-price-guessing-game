@@ -6,19 +6,33 @@ export const defaultHeaders = {
   "access-control-allow-origin": "*", // lazy cors config
 };
 
+export const create400Response = (err: any) => ({
+  statusCode: 400,
+  body: JSON.stringify({ err }),
+  headers: defaultHeaders,
+});
+
 export const create404Response = () => ({
   statusCode: 404,
   body: JSON.stringify({ err: "not found" }),
   headers: defaultHeaders,
 });
 
+export const create409Response = (opts: { err: string }) => ({
+  statusCode: 409,
+  body: JSON.stringify({ opts }),
+  headers: defaultHeaders,
+});
+
+export const create503Response = (opts: { err: string }) => ({
+  statusCode: 503,
+  body: JSON.stringify({ opts }),
+  headers: defaultHeaders,
+});
+
 export const defaultErrorHandlers: Record<string, Handler> = {
   notFound: async () => create404Response(),
-  validationFail: async (c) => ({
-    statusCode: 400,
-    body: JSON.stringify({ err: c.validation.errors }),
-    headers: defaultHeaders,
-  }),
+  validationFail: async (c) => create400Response(c.validation.errors),
   methodNotAllowed: async () => ({
     statusCode: 405,
     body: JSON.stringify({ err: "method not allowed" }),

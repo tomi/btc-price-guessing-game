@@ -1,0 +1,91 @@
+openapi: 3.0.0
+info:
+  version: "1.0.0"
+  title: Guesses API
+  description: API endpoints for making a guess
+paths:
+  /v1/guesses:
+    post:
+      summary: creates a guess
+      operationId: createGuess
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateGuessRequest"
+        description: The guess to make
+      responses:
+        "201":
+          description: guess created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Guess"
+        "400":
+          description: "invalid input, object invalid"
+        "401":
+          description: Unauthorized
+        "409":
+          description: Conflict, there is already a guess
+        "503":
+          description: Current price is not available
+      security:
+        - jwtAuth: []
+    get:
+      summary: get the active guess
+      operationId: getActiveGuess
+      responses:
+        "200":
+          description: Active guess
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ActiveGuess"
+        "401":
+          description: Unauthorized
+      security:
+        - jwtAuth: []
+
+components:
+  securitySchemes:
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Guess:
+      type: object
+      required:
+        - playerId
+        - direction
+        - priceWhenCreated
+        - createdAt
+      properties:
+        playerId:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+        direction:
+          type: string
+          enum: ["up", "down"]
+          example: up
+        priceWhenCreated:
+          type: number
+          example: 1235.7
+        createdAt:
+          type: string
+          example: 2022-11-25T12:00:00.000Z
+    CreateGuessRequest:
+      type: object
+      required:
+        - direction
+      properties:
+        direct:
+          type: string
+          enum: ["up", "down"]
+          example: up
+    ActiveGuess:
+      type: object
+      properties:
+        activeGuess:
+          $ref: "#/components/schemas/Guess"
