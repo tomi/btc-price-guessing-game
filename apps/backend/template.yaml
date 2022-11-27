@@ -7,16 +7,17 @@ Description: >
 Globals:
   Function:
     Timeout: 5
+    Runtime: nodejs18.x
+    Architectures:
+      - x86_64
 
 Resources:
+  # Players
   PlayersApiFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
       CodeUri: dist/playersApi
       Handler: handlers/playersApi.handler
-      Runtime: nodejs18.x
-      Architectures:
-        - x86_64
       Policies:
         - DynamoDBCrudPolicy:
             TableName: !Ref PlayersTable
@@ -35,6 +36,30 @@ Resources:
         Type: String
       TableName: players
 
+  UpdateBtcPriceFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: dist/btcPriceUpdate
+      Handler: handlers/btcPriceUpdate.handler
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref PricesTable
+        - AWSSecretsManagerGetSecretValuePolicy:
+            SecretArn: !Sub "arn:aws:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:btcApiKey-??????"
+      Events:
+        UpdateBtcPrice:
+          Type: Schedule
+          Properties:
+            Schedule: rate(1 minute)
+
+  PricesTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      PrimaryKey:
+        Name: id
+        Type: String
+      TableName: prices
+
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM
@@ -48,3 +73,7 @@ Outputs:
   PlayersApiFunctionIamRole:
     Description: "Implicit IAM Role created for Players API function"
     Value: !GetAtt PlayersApiFunctionRole.Arn
+
+  UpdateBtcPriceFunction:
+    Description: "Update BTC Price Lambda Function ARN"
+    Value: !GetAtt UpdateBtcPriceFunction.Arn
