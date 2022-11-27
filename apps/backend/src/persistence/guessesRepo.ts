@@ -4,7 +4,7 @@ import { Guess } from "../domain/guess";
 import { PlayerId } from "../domain/player";
 import { DdbClient } from "./ddbClient";
 
-const TABLE_NAME = "guesses";
+export const TABLE_NAME = "guesses";
 
 export type GuessesRepo = ReturnType<typeof createGuessesRepo>;
 

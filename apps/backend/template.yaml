@@ -55,6 +55,7 @@ Resources:
   UpdateBtcPriceFunction:
     Type: AWS::Serverless::Function
     Properties:
+      Timeout: 20
       CodeUri: dist/btcPriceUpdate
       Handler: handlers/btcPriceUpdate.handler
       Policies:
@@ -69,12 +70,18 @@ Resources:
             Schedule: rate(1 minute)
 
   PricesTable:
-    Type: AWS::Serverless::SimpleTable
+    Type: AWS::DynamoDB::Table
     Properties:
-      PrimaryKey:
-        Name: id
-        Type: String
       TableName: prices
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
+      StreamSpecification:
+        StreamViewType: NEW_IMAGE
 
   # Guesses
   GuessesApiFunction:
@@ -101,12 +108,35 @@ Resources:
             Method: ANY
 
   GuessesTable:
-    Type: AWS::Serverless::SimpleTable
+    Type: AWS::DynamoDB::Table
     Properties:
-      PrimaryKey:
-        Name: playerId
-        Type: String
       TableName: guesses
+      AttributeDefinitions:
+        - AttributeName: playerId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: playerId
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
+
+  ResolveGuessesFunction:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      Timeout: 60
+      CodeUri: dist/resolveGuesses
+      Handler: handlers/resolveGuesses.handler
+      Description: A Lambda function that resolves guesses after price changes
+      Events:
+        TableRecordChange:
+          Type: DynamoDB
+          Properties:
+            StartingPosition: LATEST
+            Stream: !GetAtt PricesTable.StreamArn
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref GuessesTable
+        - DynamoDBCrudPolicy:
+            TableName: !Ref PlayersTable
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function

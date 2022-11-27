@@ -3,7 +3,7 @@ import { Player, PlayerId } from "../domain/player";
 import { generateUuid } from "../domain/uuid";
 import { DdbClient } from "./ddbClient";
 
-const TABLE_NAME = "players";
+export const TABLE_NAME = "players";
 
 export interface PlayersRepoConfig {
   ddbClient: DdbClient;
