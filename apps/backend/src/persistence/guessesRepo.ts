@@ -1,6 +1,7 @@
 import { GetCommand, PutCommand } from "@aws-sdk/lib-dynamodb";
-import { getCurrentTimestamp, Uuid } from "../domain/common";
+import { getCurrentTimestamp } from "../domain/common";
 import { Guess } from "../domain/guess";
+import { PlayerId } from "../domain/player";
 import { DdbClient } from "./ddbClient";
 
 const TABLE_NAME = "guesses";
@@ -30,7 +31,7 @@ export const createGuessesRepo = ({ ddbClient }: GuessesRepoConfig) => {
     return guess;
   };
 
-  const getGuess = async (playerId: Uuid): Promise<Guess | undefined> => {
+  const getGuess = async (playerId: PlayerId): Promise<Guess | undefined> => {
     const cmd = new GetCommand({
       TableName: TABLE_NAME,
       Key: {
