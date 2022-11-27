@@ -17,12 +17,23 @@ Resources:
       Runtime: nodejs18.x
       Architectures:
         - x86_64
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref PlayersTable
       Events:
         PlayersApi:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
             Path: /v1/players/{proxy+}
             Method: ANY
+
+  PlayersTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      PrimaryKey:
+        Name: id
+        Type: String
+      TableName: players
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function

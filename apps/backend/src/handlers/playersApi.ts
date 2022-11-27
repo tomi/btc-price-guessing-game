@@ -1,7 +1,16 @@
 import "source-map-support/register";
 import * as Lambda from "aws-lambda";
 
-import { playersApi } from "../apis/playersApi";
+import { createPlayersApi } from "../apis/playersApi";
+import { createDdbClient } from "../persistence/ddbClient";
+import { createPlayersRepo } from "../persistence/playersRepo";
+
+const playersApi = createPlayersApi({
+  playersRepo: createPlayersRepo({
+    ddbClient: createDdbClient(),
+  }),
+  signingKey: process.env.JWT_SIGNING_KEY ?? "very.secret.much.secrecy.so.enigma",
+});
 
 export async function handler(event: Lambda.APIGatewayProxyEvent, context: Lambda.Context) {
   return playersApi.handleRequest(
