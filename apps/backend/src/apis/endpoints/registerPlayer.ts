@@ -1,23 +1,23 @@
-import { createJwt } from "../../domain/jwt";
+import { JwtService } from "../../domain/jwtService";
 import { PlayersRepo } from "../../persistence/playersRepo";
 import { OpenApiApiGatewayProxyEventHandler } from "../apiTypes";
 import * as common from "./common";
 
 export interface RegisterPlayerEndpointConfig {
-  signingKey: string;
+  jwtService: JwtService;
   playersRepo: PlayersRepo;
 }
 
 export const createRegisterPlayerEndpoint = ({
   playersRepo,
-  signingKey,
+  jwtService,
 }: RegisterPlayerEndpointConfig) => {
   const registerPlayer: OpenApiApiGatewayProxyEventHandler = async (c, event, context) => {
     const body = c.request.requestBody;
 
     const newPlayer = await playersRepo.persistPlayer(body.name);
 
-    const accessToken = await createJwt(signingKey, newPlayer.id);
+    const accessToken = await jwtService.createJwt(newPlayer.id);
 
     return {
       statusCode: 200,

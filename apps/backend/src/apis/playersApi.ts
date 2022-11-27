@@ -1,12 +1,13 @@
 import OpenAPIBackend from "openapi-backend";
 import path from "path";
+import { JwtService } from "../domain/jwtService";
 import { PlayersRepo } from "../persistence/playersRepo";
 
 import * as endpoints from "./endpoints";
 import { defaultErrorHandlers } from "./endpoints/common";
 
 export interface PlayersApiConfig {
-  signingKey: string;
+  jwtService: JwtService;
   playersRepo: PlayersRepo;
 }
 
