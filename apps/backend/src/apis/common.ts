@@ -6,12 +6,14 @@ export const defaultHeaders = {
   "access-control-allow-origin": "*", // lazy cors config
 };
 
+export const create404Response = () => ({
+  statusCode: 404,
+  body: JSON.stringify({ err: "not found" }),
+  headers: defaultHeaders,
+});
+
 export const defaultErrorHandlers: Record<string, Handler> = {
-  notFound: async () => ({
-    statusCode: 404,
-    body: JSON.stringify({ err: "not found" }),
-    headers: defaultHeaders,
-  }),
+  notFound: async () => create404Response(),
   validationFail: async (c) => ({
     statusCode: 400,
     body: JSON.stringify({ err: c.validation.errors }),

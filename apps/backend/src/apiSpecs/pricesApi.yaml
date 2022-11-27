@@ -1,0 +1,55 @@
+openapi: 3.0.0
+info:
+  version: "1.0.0"
+  title: Prices API
+  description: API endpoints for reading coin prices
+paths:
+  /v1/prices/{id}:
+    get:
+      summary: get the price of a coin
+      operationId: getPrice
+      description: Get the price of a coin in fiat currency. Currenly only bitcoin and USD are supported
+      parameters:
+        - name: id
+          in: path
+          description: ID of the coin-currency pair
+          required: true
+          schema:
+            type: string
+
+      responses:
+        "200":
+          description: player registered
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CoinPrice"
+        "400":
+          description: "invalid input, object invalid"
+        "401":
+          description: Unauthorized
+      security:
+        - jwtAuth: []
+components:
+  securitySchemes:
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    CoinPrice:
+      type: object
+      required:
+        - id
+        - value
+        - updatedAt
+      properties:
+        id:
+          type: string
+          example: BTC-USD
+        value:
+          type: number
+          example: 1467.24
+        updatedAt:
+          type: string
+          example: 2022-11-25T12:00:00.000Z

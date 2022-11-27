@@ -36,6 +36,22 @@ Resources:
         Type: String
       TableName: players
 
+  # Prices
+  PricesApiFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: dist/pricesApi
+      Handler: handlers/pricesApi.handler
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref PricesTable
+      Events:
+        PricesApi:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /v1/prices/{proxy+}
+            Method: ANY
+
   UpdateBtcPriceFunction:
     Type: AWS::Serverless::Function
     Properties:
