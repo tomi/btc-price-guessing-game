@@ -1,0 +1,11 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "btc-price-guessing-game"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-1mptnqvy2k92c"
+s3_prefix = "btc-price-guessing-game"
+region = "eu-central-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+image_repositories = []
