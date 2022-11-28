@@ -53,6 +53,8 @@ export async function handler(
 
   const price = await coinPriceClient.fetchBtcUsdPrice();
 
+  console.info(`Received new price ${price.value}`);
+
   await priceRepo.updatePrice(price);
 
   return;

@@ -49,6 +49,8 @@ export const resolveGuessesByNewPrice = async ({
     seconds: GUESS_RESOLVE_DELAY_IN_S,
   }).toISOString();
 
+  console.info(`Resolving guesses made before ${earliestResolvableTime}`);
+
   const resolvableGuesses = await guessResolvingRepo.getGuessesBefore(earliestResolvableTime);
 
   console.info(`Found ${resolvableGuesses.length} guesses that are ready to be resolved`);
