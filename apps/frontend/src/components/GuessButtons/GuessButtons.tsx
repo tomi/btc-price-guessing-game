@@ -36,7 +36,10 @@ export const GuessButtons: React.FC<GuessButtonsProps> = ({}) => {
 
     const timerId = setInterval(updateTimer, 1000);
 
-    return () => clearInterval(timerId);
+    return () => {
+      setSecondsSinceGuessed(0);
+      clearInterval(timerId);
+    };
   }, [activeGuess, setSecondsSinceGuessed]);
 
   return (
