@@ -1,0 +1,9 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    /* Visit https://aka.ms/tsconfig.json to read more about this file */
+    "rootDir": ".."
+  },
+  "include": ["./**/*.ts", "../src/**/*.ts"],
+  "exclude": ["node_modules"]
+}

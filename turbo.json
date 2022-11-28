@@ -4,8 +4,8 @@
     "build": {
       "outputs": ["dist/**"]
     },
-    "test:ci": {
-      "dependsOn": ["^test:ci"],
+    "test": {
+      "dependsOn": ["^test"],
       "inputs": ["src/**/*.tsx", "src/**/*.ts", "test/**/*.tsx", "test/**/*.ts"]
     },
     "clean": {

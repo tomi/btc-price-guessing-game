@@ -11,6 +11,8 @@ export interface PlayersApiConfig {
   playersRepo: PlayersRepo;
 }
 
+export type PlayersApi = ReturnType<typeof createPlayersApi>;
+
 export const createPlayersApi = (config: PlayersApiConfig) => {
   const playersApi = new OpenAPIBackend({
     definition: path.join(__dirname, "../apiSpecs/playersApi.yaml"),
