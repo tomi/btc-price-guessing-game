@@ -17,7 +17,8 @@
     "build": "npm run build-api-specs && npm run build-handlers",
     "ts": "tsc --noEmit",
     "watch-ts": "tsc -w --noEmit --preserveWatchOutput",
-    "dev": "concurrently -k -p '[{name}]' -n 'handlers,apiSpecs,typescript' -c 'yellow.bold,blue.bold,cyan.bold' 'npm:watch-handlers' 'npm:watch-api-specs' npm:watch-ts"
+    "dev": "concurrently -k -p '[{name}]' -n 'handlers,apiSpecs,typescript' -c 'yellow.bold,blue.bold,cyan.bold' 'npm:watch-handlers' 'npm:watch-api-specs' npm:watch-ts",
+    "deploy": "sam deploy"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "3.216.0",
