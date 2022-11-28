@@ -3,7 +3,7 @@ import path from "path";
 import { PricesRepo } from "../../persistence/pricesRepo";
 
 import * as endpoints from "./endpoints";
-import { createJwtAuthHandler, defaultErrorHandlers } from "../common";
+import * as common from "../common";
 import { JwtService } from "../../domain/jwtService";
 
 export interface PricesApiConfig {
@@ -18,11 +18,12 @@ export const createPricesApi = (config: PricesApiConfig) => {
   });
 
   pricesApi.register({
-    ...defaultErrorHandlers,
+    ...common.defaultErrorHandlers,
     getPrice: endpoints.createGetPriceEndpoint(config),
+    getPriceCors: common.defaultOptionsRoute,
   });
 
-  pricesApi.registerSecurityHandler("jwtAuth", createJwtAuthHandler(config.jwtService));
+  pricesApi.registerSecurityHandler("jwtAuth", common.createJwtAuthHandler(config.jwtService));
 
   pricesApi.init();
 

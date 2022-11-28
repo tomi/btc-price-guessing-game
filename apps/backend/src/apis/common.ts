@@ -1,9 +1,16 @@
 import { Handler } from "openapi-backend";
 import { JwtService } from "../domain/jwtService";
 
+export const corsHeaders = {
+  // these should be configured based on the environment
+  "Access-Control-Allow-Headers": "content-type,authorization",
+  "access-control-allow-origin": "*",
+  "access-control-allow-methods": "*",
+};
+
 export const defaultHeaders = {
   "content-type": "application/json",
-  "access-control-allow-origin": "*", // lazy cors config
+  ...corsHeaders,
 };
 
 export const create400Response = (err: any) => ({
@@ -53,6 +60,12 @@ export const defaultErrorHandlers: Record<string, Handler> = {
     };
   },
 };
+
+export const defaultOptionsRoute: Handler = () => ({
+  statusCode: 200,
+  body: "",
+  headers: corsHeaders,
+});
 
 export const createJwtAuthHandler = (jwtService: JwtService) => {
   const jwtAuthHandler: Handler = async (c) => {

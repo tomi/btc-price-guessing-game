@@ -39,6 +39,10 @@ paths:
           description: Unauthorized
       security:
         - jwtAuth: []
+    options:
+      summary: Options route for CORS
+      operationId: getMeCors
+      responses: "200"
 components:
   securitySchemes:
     jwtAuth:

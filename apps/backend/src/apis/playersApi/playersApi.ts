@@ -21,6 +21,7 @@ export const createPlayersApi = (config: PlayersApiConfig) => {
     ...common.defaultErrorHandlers,
     registerPlayer: endpoints.createRegisterPlayerEndpoint(config),
     getMe: endpoints.createGetMeEndpoint(config),
+    getMeCors: common.defaultOptionsRoute,
   });
 
   playersApi.registerSecurityHandler("jwtAuth", common.createJwtAuthHandler(config.jwtService));

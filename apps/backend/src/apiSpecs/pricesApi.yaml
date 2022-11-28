@@ -30,6 +30,16 @@ paths:
           description: Unauthorized
       security:
         - jwtAuth: []
+    options:
+      summary: Options route for CORS
+      operationId: getPriceCors
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses: "200"
 components:
   securitySchemes:
     jwtAuth:

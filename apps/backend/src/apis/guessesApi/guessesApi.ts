@@ -23,6 +23,7 @@ export const createGuessesApi = (config: GuessesApiConfig) => {
     ...common.defaultErrorHandlers,
     createGuess: endpoints.createCreateGuessEndpoint(config),
     getActiveGuess: endpoints.createGetActiveEndpoint(config),
+    guessesCors: common.defaultOptionsRoute,
   });
 
   guessesApi.registerSecurityHandler("jwtAuth", common.createJwtAuthHandler(config.jwtService));
