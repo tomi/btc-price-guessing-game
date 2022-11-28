@@ -44,7 +44,7 @@ export const GuessButtons: React.FC<GuessButtonsProps> = ({}) => {
       <Typography mb={2} align="center">
         {hasActiveGuess ? (
           <>
-            You guessed that it goes {activeGuess.direction}.<br />
+            You guessed that the price goes {activeGuess.direction}.<br />
             Fingers crossed 🤞 <br />
             {secondsSinceGuessed} s elapsed since the guess
           </>
