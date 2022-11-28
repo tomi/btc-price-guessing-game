@@ -12,6 +12,10 @@ export const createGetMeEndpoint = ({ playersRepo }: GetMeEndpointConfig) => {
 
     const user = await playersRepo.getPlayerById(userId);
 
+    if (!user) {
+      return common.create404Response();
+    }
+
     return {
       statusCode: 200,
       headers: common.defaultHeaders,
