@@ -30,7 +30,7 @@ export const PriceCard: React.FC<PriceCardProps> = ({}) => {
     <Card>
       <CardContent
         sx={{
-          minHeight: 100,
+          minHeight: 128,
           textAlign: "center",
         }}
       >

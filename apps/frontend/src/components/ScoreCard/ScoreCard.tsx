@@ -18,7 +18,7 @@ export const ScoreCard: React.FC<ScoreCardProps> = ({}) => {
     <Card>
       <CardContent
         sx={{
-          minHeight: 100,
+          minHeight: 128,
           textAlign: "center",
         }}
       >
