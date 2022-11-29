@@ -11,7 +11,7 @@ export const PlayerTitle: React.FC<PlayerTitleProps> = ({}) => {
   const { player } = stateQuery.data ?? {};
 
   return (
-    <Typography align="center" variant="h5">
+    <Typography align="center" variant="h5" component="h1">
       Hello, {player?.name ? player.name : "anonymous"} 👋
     </Typography>
   );

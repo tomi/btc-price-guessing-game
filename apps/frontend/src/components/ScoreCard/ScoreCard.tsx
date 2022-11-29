@@ -26,7 +26,13 @@ export const ScoreCard: React.FC<ScoreCardProps> = ({}) => {
           Score
         </Typography>
 
-        <Typography variant="h4" component="div" mt={2} style={colorStyle}>
+        <Typography
+          variant="h4"
+          component="div"
+          mt={2}
+          style={colorStyle}
+          data-testid="player-score"
+        >
           {score}
         </Typography>
       </CardContent>

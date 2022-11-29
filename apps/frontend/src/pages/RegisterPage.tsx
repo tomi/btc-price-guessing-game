@@ -34,11 +34,11 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({}) => {
           flex: 1,
         }}
         variant="h3"
+        component="h1"
         align="center"
         mb={4}
       >
-        Bitcoin price
-        <br />
+        Bitcoin price <br />
         guessing game
       </Typography>
 

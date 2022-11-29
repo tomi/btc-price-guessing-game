@@ -38,7 +38,7 @@ export const PriceCard: React.FC<PriceCardProps> = ({}) => {
           Price
         </Typography>
 
-        <Typography variant="h4" component="div" mt={2} style={colorStyle}>
+        <Typography variant="h4" component="div" mt={2} style={colorStyle} data-testid="btc-price">
           {priceValue ? currencyFormatter.format(priceValue) : ""}
         </Typography>
 

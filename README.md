@@ -6,9 +6,14 @@
 
 ## Environment variables
 
-Following environment variables are required **during build or development**:
+Frontend:
 
-- `VITE_API_BASE_URL`: The base url of the API
+- `VITE_API_BASE_URL`: The base url of the API for build & deploy
+- `CYPRESS_APP_URL`: The url of the frontend for e2e tests
+
+## Tests
+
+Backend contains some unit tests, while frontend contains tests that test the whole app end-to-end. Both frontend and backend tests can be run with `npm test`.
 
 ## Deployment
 
