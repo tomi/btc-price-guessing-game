@@ -6,12 +6,7 @@
 
 ## Environment variables
 
-Frontend:
-
-- `VITE_API_BASE_URL`: The base url of the API for build & deploy
-- `CYPRESS_APP_URL`: The url of the frontend for e2e tests
-
-There's a `.env-example` which contains local dev values for these. To use it run:
+There's a `.env-example` file which contains the required env variables and local dev values for these. To use it run:
 
 ```bash
 cp .env-example .env
