@@ -1,8 +1,16 @@
 # Bitcoin price guessing game
 
+A monorepo where the backend is located in `apps/backend` and frontend in `apps/frontend`
+
 ## Local development
 
-`npm run dev` starts the build watch process for the backend and the dev server for the frontend. The backend
+`npm run dev` does the following:
+
+- starts the build watch process for the backend
+- starts the build watch process for the frontend
+- start the dev server for frontend
+
+Backend can be run locally with `sam local start-api` or it can be ran in synced mode in AWS with `sam sync --stack-name <name-for-the-cf-stack> --watch`.
 
 ## Environment variables
 
@@ -54,3 +62,11 @@ Deploy the frontend:
 ## Architecture
 
 ![Emissions calculation overview](./docs/architecture.drawio.svg)
+
+## Futher development
+
+- CI/CD pipelines
+- Alarms & monitoring & logging
+- Better secret management
+- Use Lambda layers
+- Real-time UI updated e.g. with websockets
