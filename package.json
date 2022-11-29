@@ -10,11 +10,16 @@
     "packages/*",
     "apps/*"
   ],
+  "engines": {
+    "node": ">=18.10"
+  },
   "scripts": {
     "build": "turbo build",
     "clean": "turbo clean",
     "dev": "turbo dev",
-    "test": "turbo test"
+    "test": "turbo test",
+    "deploy-backend": "npm run deploy -w ./apps/backend",
+    "deploy-frontend": "npm run deploy -w ./apps/frontend"
   },
   "devDependencies": {
     "turbo": "1.6.3"

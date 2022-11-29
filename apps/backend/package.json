@@ -18,6 +18,7 @@
     "ts": "tsc --noEmit",
     "watch-ts": "tsc -w --noEmit --preserveWatchOutput",
     "dev": "concurrently -k -p '[{name}]' -n 'handlers,apiSpecs,typescript' -c 'yellow.bold,blue.bold,cyan.bold' 'npm:watch-handlers' 'npm:watch-api-specs' npm:watch-ts",
+    "deploy": "npm run build && sam build && sam deploy",
     "test": "jest",
     "watch-test": "jest --watch"
   },
