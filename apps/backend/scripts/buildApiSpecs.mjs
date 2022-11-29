@@ -9,7 +9,7 @@ const specsDir = "apiSpecs";
 
 const srcDir = path.join(__dirname, "../src");
 const apiSpecsSrcDir = path.join(srcDir, specsDir);
-const outputBaseDir = path.join(__dirname, "../dist");
+const distBaseDir = path.join(__dirname, "../dist");
 
 const apiSpecFiles = await fs.readdir(apiSpecsSrcDir);
 
@@ -18,11 +18,15 @@ for (const specFile of apiSpecFiles) {
 
   console.info(`Building API spec ${name}`);
 
-  const outDir = path.join(outputBaseDir, name, specsDir);
+  const outDir = path.join(distBaseDir, name, specsDir);
   const outFile = path.join(outDir, specFile);
-  const inFile = path.join(apiSpecsSrcDir, specFile);
+  const specFilePath = path.join(apiSpecsSrcDir, specFile);
 
-  await fs.copy(inFile, outFile);
+  await fs.copy(specFilePath, outFile);
+
+  // Generate TS types
+  const schemaFilePath = path.join(srcDir, "apis", name, `${name}.schema.ts`);
+  $`openapi-typescript ${specFilePath} --output ${schemaFilePath}`;
 }
 
 if (argv.watch) {

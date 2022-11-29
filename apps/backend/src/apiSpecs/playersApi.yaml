@@ -42,7 +42,9 @@ paths:
     options:
       summary: Options route for CORS
       operationId: getMeCors
-      responses: "200"
+      responses:
+        "200":
+          description: CORS response
 components:
   securitySchemes:
     jwtAuth:

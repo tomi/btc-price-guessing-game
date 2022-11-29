@@ -3,7 +3,7 @@ import { sub } from "date-fns";
 
 import { CoinPrice } from "../domain/price";
 import { GuessResolvingRepo, ResolveResult } from "../persistence/guessResolvingRepo";
-import { Direction, Guess } from "../domain/guess";
+import { Guess } from "../domain/guess";
 
 /**
  * How long to wait before a guess can be resolved after it has
@@ -25,8 +25,7 @@ export const calculateResolveResults = (currentPrice: number, guesses: Guess[]) 
     // Skip guesses that had the same initial price as latest price
     .filter((guess) => guess.priceWhenCreated !== currentPrice)
     .map((guess) => {
-      const correctDirection =
-        guess.priceWhenCreated < currentPrice ? Direction.Up : Direction.Down;
+      const correctDirection = guess.priceWhenCreated < currentPrice ? "up" : "down";
       const wasCorrectGuess = correctDirection === guess.direction;
 
       const result: ResolveResult = {

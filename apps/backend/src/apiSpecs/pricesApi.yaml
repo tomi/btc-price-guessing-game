@@ -25,7 +25,9 @@ paths:
     options:
       summary: Options route for CORS
       operationId: getPriceCors
-      responses: "200"
+      responses:
+        "200":
+          description: CORS response
 components:
   securitySchemes:
     jwtAuth:

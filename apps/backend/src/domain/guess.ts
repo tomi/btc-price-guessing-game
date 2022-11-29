@@ -1,9 +1,6 @@
 import { Iso8601Timestamp, Uuid } from "./common";
 
-export enum Direction {
-  Up = "up",
-  Down = "down",
-}
+export type Direction = "up" | "down";
 
 export interface Guess {
   playerId: Uuid;
