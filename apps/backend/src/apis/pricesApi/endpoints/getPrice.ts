@@ -1,5 +1,4 @@
 import { PricesRepo } from "../../../persistence/pricesRepo";
-import { OpenApiApiGatewayProxyEventHandler } from "../../apiTypes";
 import * as common from "../../common";
 
 export interface GetPriceEndpointConfig {
@@ -7,7 +6,7 @@ export interface GetPriceEndpointConfig {
 }
 
 export const createGetPriceEndpoint = ({ pricesRepo }: GetPriceEndpointConfig) => {
-  const getPrice: OpenApiApiGatewayProxyEventHandler = async (c, event, context) => {
+  const getPrice: common.OpenApiApiGatewayProxyEventHandler = async (c, event, context) => {
     const price = await pricesRepo.getPriceById("BTC-USD");
 
     if (!price) {

@@ -1,5 +1,4 @@
 import { GuessesRepo } from "../../../persistence/guessesRepo";
-import { OpenApiApiGatewayProxyEventHandler } from "../../apiTypes";
 import * as common from "../../common";
 
 export interface GetActiveEndpointConfig {
@@ -7,7 +6,7 @@ export interface GetActiveEndpointConfig {
 }
 
 export const createGetActiveEndpoint = ({ guessesRepo }: GetActiveEndpointConfig) => {
-  const createGuess: OpenApiApiGatewayProxyEventHandler = async (c, event, context) => {
+  const createGuess: common.OpenApiApiGatewayProxyEventHandler = async (c, event, context) => {
     const { userId: playerId } = c.security.jwtAuth;
 
     const activeGuess = await guessesRepo.getGuess(playerId);

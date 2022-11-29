@@ -1,6 +1,5 @@
 import { GuessesRepo } from "../../../persistence/guessesRepo";
 import { PricesRepo } from "../../../persistence/pricesRepo";
-import { OpenApiApiGatewayProxyEventHandler } from "../../apiTypes";
 import * as common from "../../common";
 import * as schema from "../guessesApi.schema";
 
@@ -13,10 +12,7 @@ export const createCreateGuessEndpoint = ({
   guessesRepo,
   pricesRepo,
 }: CreateGuessEndpointConfig) => {
-  const createGuess: OpenApiApiGatewayProxyEventHandler = async (c, event, context) => {
-    // TODO: it would be nicer if ajv also validated this
-    const body = c.request.requestBody;
-    if (body.direction !== "up" && body.direction !== "down") {
+  const createGuess: common.OpenApiApiGatewayProxyEventHandler = async (c, event, context) => {
     // TODO: it would be nicer if ajv also validated this, but
     // it seems it doesn't check enum values
     const body = c.request.requestBody as schema.components["schemas"]["CreateGuessRequest"];

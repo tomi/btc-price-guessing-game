@@ -1,5 +1,12 @@
-import { Handler } from "openapi-backend";
+import * as Lambda from "aws-lambda";
+import * as OpenApi from "openapi-backend";
 import { JwtService } from "../domain/jwtService";
+
+export type OpenApiApiGatewayProxyEventHandler = (
+  c: OpenApi.Context,
+  event: Lambda.APIGatewayProxyEvent,
+  lambdaContext: Lambda.Context,
+) => Promise<Lambda.APIGatewayProxyResult>;
 
 export const corsHeaders = {
   // these should be configured based on the environment
@@ -37,7 +44,7 @@ export const create503Response = (opts: { err: string }) => ({
   headers: defaultHeaders,
 });
 
-export const defaultErrorHandlers: Record<string, Handler> = {
+export const defaultErrorHandlers: Record<string, OpenApi.Handler> = {
   notFound: async () => create404Response(),
   validationFail: async (c) => create400Response(c.validation.errors),
   methodNotAllowed: async () => ({
@@ -61,14 +68,14 @@ export const defaultErrorHandlers: Record<string, Handler> = {
   },
 };
 
-export const defaultOptionsRoute: Handler = () => ({
+export const defaultOptionsRoute: OpenApi.Handler = () => ({
   statusCode: 200,
   body: "",
   headers: corsHeaders,
 });
 
 export const createJwtAuthHandler = (jwtService: JwtService) => {
-  const jwtAuthHandler: Handler = async (c) => {
+  const jwtAuthHandler: OpenApi.Handler = async (c) => {
     const authHeader = c.request.headers["authorization"] as string;
     if (!authHeader) {
       throw new Error("Missing authorization header");

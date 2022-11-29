@@ -1,5 +1,4 @@
 import { PlayersRepo } from "../../../persistence/playersRepo";
-import { OpenApiApiGatewayProxyEventHandler } from "../../apiTypes";
 import * as common from "../../common";
 
 export interface GetMeEndpointConfig {
@@ -7,7 +6,7 @@ export interface GetMeEndpointConfig {
 }
 
 export const createGetMeEndpoint = ({ playersRepo }: GetMeEndpointConfig) => {
-  const getMe: OpenApiApiGatewayProxyEventHandler = async (c, event, context) => {
+  const getMe: common.OpenApiApiGatewayProxyEventHandler = async (c, event, context) => {
     const { userId } = c.security.jwtAuth;
 
     const user = await playersRepo.getPlayerById(userId);
