@@ -14,7 +14,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "deploy": "npm run build && amplify publish",
+    "deploy": "amplify publish -c -y",
     "cypress:open": "cypress open",
     "test": "cypress run"
   },
