@@ -11,6 +11,13 @@ Frontend:
 - `VITE_API_BASE_URL`: The base url of the API for build & deploy
 - `CYPRESS_APP_URL`: The url of the frontend for e2e tests
 
+There's a `.env-example` which contains local dev values for these. To use it run:
+
+```bash
+cp .env-example .env
+source .env
+```
+
 ## Tests
 
 Backend contains some unit tests, while frontend contains tests that test the whole app end-to-end. Both frontend and backend tests can be run with `npm test`.
