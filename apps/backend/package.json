@@ -28,7 +28,6 @@
     "@aws-sdk/lib-dynamodb": "3.216.0",
     "@aws-sdk/util-dynamodb": "3.216.0",
     "@confconf/aws-secrets-manager": "2.1.0",
-    "@confconf/confconf": "2.2.1",
     "date-fns": "2.29.3",
     "fromfrom": "1.8.0",
     "jsonwebtoken": "8.5.1",

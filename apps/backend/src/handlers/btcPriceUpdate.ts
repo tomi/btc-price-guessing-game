@@ -1,7 +1,6 @@
 import "source-map-support/register";
 import * as Lambda from "aws-lambda";
 import { SecretsManagerClient } from "@aws-sdk/client-secrets-manager";
-import { confconf } from "@confconf/confconf";
 import { awsSecretsManagerConfig } from "@confconf/aws-secrets-manager";
 import { createCoinPriceClient } from "../http/coinPriceClient";
 import { createPricesRepo } from "../persistence/pricesRepo";
@@ -13,30 +12,22 @@ type Config = {
   btcApiKey: string;
 };
 
-async function loadConfig() {
-  // Create the configuration loader
-  const configLoader = confconf<Config>({
-    schema: {
-      type: "object",
-      properties: {
-        btcApiKey: { type: "string" },
-      },
-      required: ["btcApiKey"],
+async function loadConfig(): Promise<Config> {
+  const configLoader = awsSecretsManagerConfig<string>({
+    client: secretsClient,
+    secretToLoad: {
+      secretId: "btcApiKey",
     },
-    providers: [
-      awsSecretsManagerConfig({
-        client: secretsClient,
-        secretToLoad: {
-          secretId: "btcApiKey",
-          transform: (val) => ({
-            btcApiKey: val,
-          }),
-        },
-      }),
-    ],
   });
 
-  return await configLoader.loadAndValidate();
+  const btcApiKey = await configLoader.load();
+  if (!btcApiKey) {
+    throw new Error("Missing btcApiKey secret");
+  }
+
+  return {
+    btcApiKey,
+  };
 }
 
 export async function handler(
@@ -51,11 +42,14 @@ export async function handler(
     ddbClient: createDdbClient(),
   });
 
-  const price = await coinPriceClient.fetchBtcUsdPrice();
+  const btcUsdPrice = await coinPriceClient.fetchBtcUsdPrice();
 
-  console.info(`Received new price ${price.value}`);
+  console.info(`Received new price ${btcUsdPrice.value}`);
 
-  await priceRepo.updatePrice(price);
+  await priceRepo.updatePrice({
+    id: "BTC-USD",
+    ...btcUsdPrice,
+  });
 
   return;
 }

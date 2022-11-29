@@ -7,9 +7,8 @@ export interface GetPriceEndpointConfig {
 }
 
 export const createGetPriceEndpoint = ({ pricesRepo }: GetPriceEndpointConfig) => {
-  const getMe: OpenApiApiGatewayProxyEventHandler = async (c, event, context) => {
-    const { id } = c.request.params;
-    const price = await pricesRepo.getPriceById(id as "BTC-USD");
+  const getPrice: OpenApiApiGatewayProxyEventHandler = async (c, event, context) => {
+    const price = await pricesRepo.getPriceById("BTC-USD");
 
     if (!price) {
       return common.create404Response();
@@ -22,5 +21,5 @@ export const createGetPriceEndpoint = ({ pricesRepo }: GetPriceEndpointConfig) =
     };
   };
 
-  return getMe;
+  return getPrice;
 };

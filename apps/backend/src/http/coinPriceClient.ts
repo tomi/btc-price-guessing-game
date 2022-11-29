@@ -1,13 +1,12 @@
 import fetch from "node-fetch";
 import { getCurrentTimestamp } from "../domain/common";
-import { CoinPrice } from "../domain/price";
 
 export interface CointPriceClientConfig {
   apiKey: string;
 }
 
 export const createCoinPriceClient = ({ apiKey }: CointPriceClientConfig) => {
-  const fetchBtcUsdPrice = async (): Promise<CoinPrice> => {
+  const fetchBtcUsdPrice = async () => {
     const response = await fetch(
       `https://coingecko.p.rapidapi.com/simple/price?ids=bitcoin&vs_currencies=usd`,
       {
@@ -27,7 +26,6 @@ export const createCoinPriceClient = ({ apiKey }: CointPriceClientConfig) => {
     const body = (await response.json()) as PriceResponse;
 
     return {
-      id: "BTC-USD",
       updatedAt: getCurrentTimestamp(),
       value: body.bitcoin.usd,
     };

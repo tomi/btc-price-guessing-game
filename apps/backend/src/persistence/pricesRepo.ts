@@ -1,5 +1,5 @@
 import { GetCommand, PutCommand } from "@aws-sdk/lib-dynamodb";
-import { CoinPrice, PriceKey } from "../domain/price";
+import { CoinPrice, PriceId } from "../domain/price";
 import { DdbClient } from "./ddbClient";
 
 const TABLE_NAME = "prices";
@@ -20,7 +20,7 @@ export const createPricesRepo = ({ ddbClient }: PricesRepoConfig) => {
     await ddbClient.send(cmd);
   };
 
-  const getPriceById = async (id: PriceKey): Promise<CoinPrice | undefined> => {
+  const getPriceById = async (id: PriceId): Promise<CoinPrice | undefined> => {
     const cmd = new GetCommand({
       TableName: TABLE_NAME,
       Key: {

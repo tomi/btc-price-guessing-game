@@ -1,9 +1,10 @@
 import { Iso8601Timestamp } from "./common";
 
-export type PriceKey = "BTC-USD";
+// Currently there's only BTC-USD
+export type PriceId = "BTC-USD";
 
 export interface CoinPrice {
-  id: PriceKey;
+  id: PriceId;
   value: number;
   updatedAt: Iso8601Timestamp;
 }
