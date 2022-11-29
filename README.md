@@ -48,3 +48,7 @@ Deploy the frontend:
 ### Subsequent deploys
 
 `npm run deploy-backend` and `npm run deploy-frontend`
+
+## Architecture
+
+![Emissions calculation overview](./docs/architecture.drawio.svg)
