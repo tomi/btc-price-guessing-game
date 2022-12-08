@@ -10,6 +10,9 @@ Globals:
     Runtime: nodejs18.x
     Architectures:
       - arm64
+    Environment:
+      Variables:
+        DDB_ENDPOINT: ""
 
 Resources:
   # Players
@@ -85,6 +88,7 @@ Resources:
           KeyType: HASH
       BillingMode: PAY_PER_REQUEST
       StreamSpecification:
+        StreamEnabled: true
         StreamViewType: NEW_IMAGE
 
   # Guesses

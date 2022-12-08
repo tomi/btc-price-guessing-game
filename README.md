@@ -7,10 +7,12 @@ A monorepo where the backend is located in `apps/backend` and frontend in `apps/
 `npm run dev` does the following:
 
 - starts the build watch process for the backend
+- starts the dev server for backend
+- starts the backend database (in docker)
 - starts the build watch process for the frontend
-- start the dev server for frontend
+- starts the dev server for frontend
 
-Backend can be run locally with `sam local start-api` or it can be ran in synced mode in AWS with `sam sync --stack-name <name-for-the-cf-stack> --watch`.
+The backend can also be ran in synced mode in AWS with `sam sync --stack-name <name-for-the-cf-stack> --watch`.
 
 ## Environment variables
 

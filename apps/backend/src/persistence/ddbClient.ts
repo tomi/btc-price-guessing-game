@@ -15,7 +15,11 @@ const translateConfig = { marshallOptions };
 export type DdbClient = DynamoDBDocumentClient;
 
 export const createDdbClient = (config?: DynamoDBClientConfig) => {
-  const client = new DynamoDBClient(config ?? {});
+  const client = new DynamoDBClient(
+    config ?? {
+      endpoint: process.env.DDB_ENDPOINT,
+    },
+  );
   const ddbClient = DynamoDBDocumentClient.from(client, translateConfig);
 
   return ddbClient;
