@@ -9,7 +9,7 @@ Globals:
     Timeout: 5
     Runtime: nodejs18.x
     Architectures:
-      - x86_64
+      - arm64
 
 Resources:
   # Players
