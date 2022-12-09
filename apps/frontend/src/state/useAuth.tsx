@@ -5,6 +5,7 @@ const STORAGE_TOKEN_KEY = "TOKEN";
 
 type AuthState = {
   accessToken: string | null;
+  isLoading: boolean;
 };
 type AuthContextState = [AuthState, React.Dispatch<React.SetStateAction<AuthState>>];
 
@@ -15,8 +16,9 @@ export interface AuthProviderProps {
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [authState, setAuthState] = React.useState({
+  const [authState, setAuthState] = React.useState<AuthState>({
     accessToken: loadAuthToken(),
+    isLoading: false,
   });
 
   const value = React.useMemo<AuthContextState>(() => [authState, setAuthState], [authState]);
@@ -33,24 +35,37 @@ export const useAuth = () => {
   const [authState, setAuthState] = context;
 
   const register = React.useCallback(async (playerName: string) => {
-    const accessToken = await playerApiClient.register(playerName);
+    try {
+      setAuthState((prevState) => ({
+        ...prevState,
+        isLoading: true,
+      }));
 
-    persistAccessToken(accessToken);
-    setAuthState({ accessToken });
+      const accessToken = await playerApiClient.register(playerName);
+
+      persistAccessToken(accessToken);
+      setAuthState((prevState) => ({ ...prevState, accessToken }));
+    } catch (err) {
+      // TODO: error handling
+    } finally {
+      setAuthState((prevState) => ({ ...prevState, isLoading: false }));
+    }
   }, []);
 
   const logout = () => {
     removeAccessToken();
-    setAuthState({
+    setAuthState((prevState) => ({
+      ...prevState,
       accessToken: null,
-    });
+      isLoading: false,
+    }));
   };
 
   return {
     register,
     logout,
     isAuthenticated: !!authState.accessToken,
-    accessToken: authState.accessToken,
+    ...authState,
   };
 };
 

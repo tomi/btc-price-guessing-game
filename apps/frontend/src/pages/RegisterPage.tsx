@@ -10,7 +10,7 @@ import { Typography } from "@mui/material";
 export interface RegisterPageProps {}
 
 export const RegisterPage: React.FC<RegisterPageProps> = ({}) => {
-  const { register } = useAuth();
+  const { register, isLoading } = useAuth();
   const [name, setName] = React.useState("");
 
   const onNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,9 +64,15 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({}) => {
       >
         <Typography align="center">Give a name to get started</Typography>
 
-        <TextField id="playerName" label="Name" variant="outlined" onChange={onNameChange} />
-        <Button variant="contained" disabled={!name} onClick={onStart}>
-          Start
+        <TextField
+          id="playerName"
+          label="Name"
+          variant="outlined"
+          disabled={isLoading}
+          onChange={onNameChange}
+        />
+        <Button variant="contained" disabled={!name || isLoading} onClick={onStart}>
+          {isLoading ? "Loading..." : "Start"}
         </Button>
       </Box>
     </Container>
