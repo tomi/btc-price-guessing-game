@@ -1,5 +1,6 @@
 import React from "react";
 import * as playerApiClient from "../apiClients/playersApiClient";
+import { useErrors } from "./useErrors";
 
 const STORAGE_TOKEN_KEY = "TOKEN";
 
@@ -32,6 +33,7 @@ export const useAuth = () => {
     throw new Error("useAuth must be used within AuthProvider");
   }
 
+  const { setError: addError } = useErrors();
   const [authState, setAuthState] = context;
 
   const register = React.useCallback(async (playerName: string) => {
@@ -46,7 +48,8 @@ export const useAuth = () => {
       persistAccessToken(accessToken);
       setAuthState((prevState) => ({ ...prevState, accessToken }));
     } catch (err) {
-      // TODO: error handling
+      const error = err as Error;
+      addError(`Registration failed: ${error.message}`);
     } finally {
       setAuthState((prevState) => ({ ...prevState, isLoading: false }));
     }
