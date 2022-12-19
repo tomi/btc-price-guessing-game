@@ -65,7 +65,7 @@ Deploy the frontend:
 
 ![Emissions calculation overview](./docs/architecture.drawio.svg)
 
-## Futher development
+## Further development
 
 - CI/CD pipelines
 - Alarms & monitoring & logging
